@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+  <!DOCTYPE validators PUBLIC
+  		"-//OpenSymphony Group//XWork Validator 1.0.3//EN"
+  		"http://www.opensymphony.com/xwork/xwork-validator-1.0.3.dtd">
+
+<validators>
+	<field name="yh.yhname">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+			<message>注册用户名不能为空</message>
+		</field-validator>
+		<field-validator type="stringlength">
+			<param name="minLength">3</param>
+			<param name="maxLength">6</param>
+			<message>用户名长度必须在${minLength}-${maxLength}之间</message>
+		</field-validator>
+	</field>
+	<field name="yh.yhpwd">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+			<message>用户密码不能为空</message>
+		</field-validator>
+		<field-validator type="stringlength">
+			<param name="minLength">3</param>
+			<param name="maxLength">6</param>
+			<message>密码长度必须在${minLength}-${maxLength}之间</message>
+		</field-validator>
+	</field>
+	
+	<field name="repassword">
+		<field-validator type="fieldexpression">
+			<param name="expression">repassword==yh.yhpwd</param>
+			<message>两次密码必须相同</message>
+		</field-validator>
+	</field>
+	<field name="yh.yhphone">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+			<message>电话不能为空</message>
+		</field-validator> 
+		<field-validator type="regex">
+			<param name="expression">^1\d{10}$</param>
+			<message>电话必须为1开头的11位数字</message>
+		</field-validator>
+	</field>
+	
+	
+</validators>

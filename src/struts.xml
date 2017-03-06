@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="default" extends="struts-default" namespace="/">
+	<!-- 配置文件上传的拦截器 -->
+	
+
+		
+	<interceptors>
+		<interceptor-stack name="uploadStack">
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">image/jpeg,image/gif</param>
+				<param name="maximunSize">10240000</param>
+			</interceptor-ref>
+			 <interceptor-ref name="defaultStack"></interceptor-ref>
+		</interceptor-stack>
+	</interceptors>
+	
+		<action name="*Productcase" class="productcaseAction" method="{1}">
+			<result name="findproductcase_success">/page/case.jsp</result>
+			<result name="findproductcase_fail">/page/index.jsp</result>
+			<result name="findProductcaseByPcId_success">/page/case_show.jsp</result>
+		</action>
+		               
+		<action name="*Producttype" class="productTypeAction" method="{1}">
+			<!--  <interceptor-ref name="uploadStack"></interceptor-ref>  -->
+			<result name="addpt_success" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">findptProducttype</param>
+			</result>
+			<result name="findpt_success">/manager/goods_sort.jsp</result>
+			<result name="toupdatept_success">/manager/pt_update.jsp</result>
+			<result name="updatept_success" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">findptProducttype</param>
+			</result>
+		</action>
+		
+		<action name="*IndexAction" class="indexAction" method="{1}">
+			<result name="toindex_success">/page/index.jsp</result>
+		</action>
+	
+		<action name="loginYonghu" class="yonghuAction" method="login">
+			<result name="admin_success">page/manager/index1.jsp</result>
+			<result name="login_success" type="redirectAction">toIndexIndexAction</result>
+			<result name="error_success" >/page/login.jsp</result>
+			
+			<result name="input">/page/login.jsp</result>
+			<!--<result name="add_success">/page/login.jsp</result>
+			<result name="add_error">/page/regs.jsp</result>-->
+		</action>
+		<action name="addYonghu" class="yonghuAction" method="add">
+		<!--
+			<result name="admin_success">page/manager.jsp</result>
+			<result name="login_success" type="redirectAction">toIndexIndexAction</result>
+			<result name="error_success" >/page/login.jsp</result>
+		-->
+		<result name="input">/page/regs.jsp</result>
+			<result name="add_success">/page/login.jsp</result>
+			<result name="add_error">/page/regs.jsp</result>
+		</action>
+		
+		<action name="*Product" class="productAction" method="{1}">
+			<result name="delete_success" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">fenyepManager</param>
+			</result> 
+			<!-- <interceptor-ref name="uploadStack"></interceptor-ref>  -->
+			<result name="add_success" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">fenyepManager</param>
+			</result>
+			<result name="findproduct_success">page/product.jsp</result>
+			<result name="findproductById_success">/page/product_show.jsp</result>
+			<result name="toupdateproduct_success">manager/goods_update.jsp</result>
+			<result name="toaadd_success">manager/goods_add.jsp</result>
+			<result name="deletemany_success" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">fenyepManager</param>
+			</result>
+			<result name="update_success"   type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">fenyepManager</param>
+			</result>
+		</action>
+		
+		<action name="*Manager" class="managerAction" method="{1}">
+			<result name="managerfenyep_success">manager/goods_list.jsp</result>
+		</action>
+		
+		<action name="createImage" class="createImageAction">
+			<result name="success" type="stream">
+				<param name="contentType">image/jpeg</param>
+				<param name="inputName">inputStream</param>
+			</result>
+		</action>
+		
+		<action name="*Company" class="companyAction" method="{1}">
+			<result name="findCompanygywm_success">/page/about.jsp</result>
+			<result name="findCompanygsjj_success">/page/gsjj.jsp</result>
+			<result name="findCompanylxwm_success">/page/contact.jsp</result>
+			<result name="findCompanyfzlc_success">/page/fzlc.jsp</result>
+		</action>
+		
+		<action name="*News" class="newsAction" method="{1}">
+			<result name="findnews_success">/page/news.jsp</result>
+			<result name="findNewsById_success">/page/news_show.jsp</result>
+		</action>
+		
+		<action name="*Question" class="questionAction" method="{1}">
+			<result name="findquestion_success">/page/question.jsp</result>
+		</action>
+		
+		<action name="*Hydt" class="HydtAction" method="{1}">
+			<result name="findhydt_success">/page/hydt.jsp</result>
+			<result name="findHydtsId_success">/page/hydt_show.jsp</result>
+		</action>	
+	</package>
+</struts>    

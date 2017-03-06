@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd">
+
+
+	<!-- 配置数据源 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"></property>
+		<property name="username" value="sxnd"></property>
+		<property name="password" value="sxnd"></property>
+	</bean>
+	
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle9Dialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>com/sxnd/jingshui/entity/Yonghu.hbm.xml</value>
+				<value>com/sxnd/jingshui/entity/Cpln.hbm.xml</value>
+				<value>com/sxnd/jingshui/entity/Jiameng.hbm.xml</value>
+				<value>com/sxnd/jingshui/entity/Answer.hbm.xml</value>
+				<value>com/sxnd/jingshui/entity/Producttype.hbm.xml</value>
+				<value>com/sxnd/jingshui/entity/Company.hbm.xml</value>
+				<value>com/sxnd/jingshui/entity/Orderdetail.hbm.xml</value>
+				<value>com/sxnd/jingshui/entity/Productcasetype.hbm.xml</value>
+				<value>com/sxnd/jingshui/entity/News.hbm.xml</value>
+				<value>com/sxnd/jingshui/entity/Question.hbm.xml</value>
+				<value>com/sxnd/jingshui/entity/Hydt.hbm.xml</value>
+				<value>com/sxnd/jingshui/entity/Orderinfo.hbm.xml</value>
+				<value>com/sxnd/jingshui/entity/Product.hbm.xml</value>
+				<value>com/sxnd/jingshui/entity/Productcase.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<!-- 配置AOP声明式事务 -->
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="add*" propagation="REQUIRED" read-only="false"/>
+			<tx:method name="delete*" propagation="REQUIRED"/>
+			<tx:method name="update*" propagation="REQUIRED"/>
+			<tx:method name="*" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- 配置切点 -->
+	<aop:config>
+		<aop:pointcut expression="execution(* com.sxnd.jingshui.biz.impl.*.*(..))" id="pointcut"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
+	</aop:config>
+	<!-- 配置dao的信息 -->
+	<bean id="yonghuDao" class="com.sxnd.jingshui.dao.impl.YonghuDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="productDao" class="com.sxnd.jingshui.dao.impl.ProductDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="hydtDao" class="com.sxnd.jingshui.dao.impl.HydtDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="newsDao" class="com.sxnd.jingshui.dao.impl.NewsDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="productcaseDao" class="com.sxnd.jingshui.dao.impl.ProductcaseDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="producttypeDao" class="com.sxnd.jingshui.dao.impl.ProducttypeDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="productcasetypeDao" class="com.sxnd.jingshui.dao.impl.ProductcasetypeDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="companyDao" class="com.sxnd.jingshui.dao.impl.CompanyDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="questionDao" class="com.sxnd.jingshui.dao.impl.QuestionDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<!-- 配置biz -->
+	<bean id="yonghuBiz" class="com.sxnd.jingshui.biz.impl.YonghuBizImpl">
+		<property name="yonghuDao" ref="yonghuDao"></property>
+	</bean>
+	<bean id="productBiz" class="com.sxnd.jingshui.biz.impl.ProductBizImpl">
+		<property name="productDao" ref="productDao"></property>
+	</bean>
+	<bean id="hydtBiz" class="com.sxnd.jingshui.biz.impl.HydtBizImpl">
+		<property name="hydtDao" ref="hydtDao"></property>
+	</bean>
+	<bean id="newsBiz" class="com.sxnd.jingshui.biz.impl.NewsBizImpl">
+		<property name="newsDao" ref="newsDao"></property>
+	</bean>
+	<bean id="productcaseBiz" class="com.sxnd.jingshui.biz.impl.ProductcaseBizImpl">
+		<property name="productcaseDao" ref="productcaseDao"></property>
+	</bean>
+	<bean id="producttypeBiz" class="com.sxnd.jingshui.biz.impl.ProducttypeBizImpl">
+		<property name="producttypeDao" ref="producttypeDao"></property>
+	</bean>
+	<bean id="productcasetypeBiz" class="com.sxnd.jingshui.biz.impl.ProductcasetypeBizImpl">
+		<property name="productcasetypeDao" ref="productcasetypeDao"></property>
+	</bean>
+	<bean id="companyBiz" class="com.sxnd.jingshui.biz.impl.CompanyBizImpl">
+		<property name="companyDao" ref="companyDao"></property>
+	</bean>
+	<bean id="questionBiz" class="com.sxnd.jingshui.biz.impl.QuestionBizImpl">
+		<property name="questionDao" ref="questionDao"></property>
+	</bean>
+	<!-- 配置action -->
+	<bean id="createImageAction" class="com.sxnd.jingshui.action.CreateImageAction" scope="prototype"></bean>
+	<bean id="yonghuAction" class="com.sxnd.jingshui.action.YonghuAction" scope="prototype">
+		<property name="yonghuBiz" ref="yonghuBiz"></property>
+	</bean>
+	<bean id="indexAction" class="com.sxnd.jingshui.action.IndexAction" scope="prototype">
+		<property name="productBiz" ref="productBiz"></property>
+		<property name="productcaseBiz" ref="productcaseBiz"></property>
+		<property name="producttypeBiz" ref="producttypeBiz"></property>
+		<property name="hydtBiz" ref="hydtBiz"></property>
+		<property name="newsBiz" ref="newsBiz"></property>
+	</bean>
+	<bean id="newsAction" class="com.sxnd.jingshui.action.NewsAction" scope="prototype">
+		<property name="newsBiz" ref="newsBiz"></property>
+	</bean>
+	<bean id="questionAction" class="com.sxnd.jingshui.action.QuestionAction" scope="prototype">
+		<property name="questionBiz" ref="questionBiz"></property>
+	</bean>
+	<bean id="HydtAction" class="com.sxnd.jingshui.action.HydtAction" scope="prototype">
+		<property name="hydtBiz" ref="hydtBiz"></property>
+	</bean>
+	<bean id="productAction" class="com.sxnd.jingshui.action.ProductAction" scope="prototype">
+		<property name="productBiz" ref="productBiz"></property>
+		<property name="producttypeBiz" ref="producttypeBiz"></property>
+		
+	</bean>
+	<bean id="productcaseAction" class="com.sxnd.jingshui.action.ProductcaseAction" scope="prototype">
+		<property name="productcaseBiz" ref="productcaseBiz"></property>
+		<property name="productcasetypeBiz" ref="productcasetypeBiz"></property>
+	</bean>
+	<bean id="productcasetypeAction" class="com.sxnd.jingshui.action.ProductcasetypeAction" scope="prototype">
+		<property name="productcasetypeBiz" ref="productcasetypeBiz"></property>
+	</bean>
+	<bean id="companyAction" class="com.sxnd.jingshui.action.CompanyAction" scope="prototype">
+		<property name="companyBiz" ref="companyBiz"></property>
+	</bean>
+	<bean id="managerAction" class="com.sxnd.jingshui.action.ManagerAction" scope="prototype">
+		<property name="productBiz" ref="productBiz"></property>
+		<property name="producttypeBiz" ref="producttypeBiz"></property>
+	</bean>
+	<bean id="productTypeAction" class="com.sxnd.jingshui.action.ProducttypeAction" scope="prototype">
+		<property name="producttypeBiz" ref="producttypeBiz"></property>
+
+	</bean>
+</beans>
