@@ -123,7 +123,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                                         <td>产品图片：</td>
                                                         <td width="20%">
                                                         <img style="width: 55px;height: 40px" src="images/${product.PImg}" alt="">
-                                                        <input type="file" name="image" value="${product.PImg}">
+                                                        <input type="file" name="image" value="">
+                                                       <input type="hidden" name="product.PImg" value="${product.PImg}">
                                                         </td>
                                                         <td>上传产品图片</td>
                                                         <td width="2%">&nbsp;</td>

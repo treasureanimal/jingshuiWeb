@@ -1,0 +1,263 @@
+select * from news;
+select * from product;
+select * from producttype;
+select * from yonghu;
+select * from question;
+select * from answer;
+select * from hydt;
+select * from productcase;
+select * from productcasetype;
+select * from cpln;
+select * from company;
+select * from jiameng;
+
+
+drop table hydt;
+drop table news;
+drop table yonghu;
+drop table product;
+drop table producttype;
+drop table orderdetail;
+drop table manager;
+drop table orderinfo;
+drop table question;
+drop table answer;
+
+
+drop sequence orderinfo_seq;
+drop sequence pro_seq;
+drop sequence protype_seq;
+drop sequence orderdetail_seq;
+drop sequence manager_seq;
+drop sequence yh_seq;
+drop sequence question_seq;
+drop sequence answer_seq;
+drop sequence new_seq;
+
+--------创建新闻表------------------------
+create table news(
+       n_id number(10) primary key,
+       n_writer varchar2(8),
+       n_title varchar2(50),
+       n_content nclob,
+       n_img varchar2(100),
+       n_date date    
+);
+create sequence new_seq;
+-------创建产品表-------------------
+
+create table product(
+     p_id number (6) primary key,
+     p_name varchar2(50),
+     p_usernumber number(6),
+     p_volume varchar2(5),
+     p_wate varchar2(6),
+     p_line varchar2(50),
+     p_system  varchar2(50),
+     p_yield varchar2(10),
+     p_kpa varchar2(20),
+     p_img varchar2(100),
+     pt_id number references producttype(pt_id),
+     p_price number(6),
+     p_kucun number(6)
+);
+create sequence pro_seq;
+
+-----产品类型表----------
+
+create table producttype(
+    pt_id number primary key,
+    pt_name varchar2(20),
+    pt_img varchar2(300)
+);
+create sequence protype_seq START WITH 0 minvalue 0;
+
+----用户表--------------
+create table yonghu(
+       yhid number primary key,
+       yhpwd varchar2(20) not null,
+       yhname varchar2(20) not null,
+       yhemail varchar2(20) not null,
+       yhimg varchar2(50),
+       yhphone varchar2(11) not null,
+       yhaddress varchar2(30) not null,
+       isadmin number(5) not null,
+       yhsex varchar(10) not null
+     
+);
+create sequence yh_seq minvalue 0;
+
+select yonghu0_.YHID as YHID8_, yonghu0_.YHPWD as YHPWD8_, yonghu0_.YHNAME as YHNAME8_, yonghu0_.YHEMAIL as YHEMAIL8_, yonghu0_.YHIMG as YHIMG8_, yonghu0_.YHPHONE as YHPHONE8_, yonghu0_.YHADDRESS as YHADDRESS8_, yonghu0_.ISADMIN as ISADMIN8_, yonghu0_.YHSEX as YHSEX8_ from SXND.YONGHU yonghu0_ where yonghu0_.YHNAME='张宏伟' and yonghu0_.YHPWD='123456'
+
+SELECT * FROM yonghu
+
+-----订单表---------------
+
+create table orderinfo(
+       oiid number primary key,
+       yhid number references yonghu(yhid),
+       total number not null,
+       oiaddress varchar2(50) not null,
+       oiname varchar2(20) not null,
+       oiphone varchar2(11) not null,
+       oidate date
+);
+create sequence orderinfo_seq START WITH 0 minvalue 0;
+
+-----订单详情表-----------
+
+create table orderdetail(
+       odid number primary key,
+       oiid number references orderinfo(oiid) not null,
+       p_id number references product(p_id),
+       odnumber number not null,
+       oddate date
+);
+create sequence orderdetail_seq START WITH 0 minvalue 0;
+-----9.question(留言表)--------
+create table question(
+q_id number primary key,
+q_content varchar2(100),
+y_hid number references yonghu(yhid),
+q_status number not null,
+q_date date
+);
+create sequence question_seq START WITH 0 minvalue 0;
+
+----answer(回复表)-----------
+create table answer(
+a_id number primary key,
+q_id number references question(q_id),
+a_content varchar2(100),
+a_date date
+);
+create sequence answer_seq START WITH 0 minvalue 0;
+
+-----------加盟表---------------
+create table jiameng(
+jm_id number primary key,
+jm_tj varchar2(1000),
+jm_ys varchar2(1000)
+);
+create sequence jm_seq;
+--------------公司表-----------------------
+create table company(
+c_id number primary key,
+c_fzlc nclob,
+c_gsjz nclob,
+c_gywm nclob,
+c_name varchar2(100),
+c_qgphone varchar2(50),
+c_phone varchar2(50),
+c_fax varchar2(50),
+c_mpbilephone varchar2(50),
+c_email varchar2(10),
+c_website varchar2(20),
+c_address varchar2(100),
+c_img varchar2(100)
+);
+create sequence company_seq;
+
+-----------hydt表--行业动态-----------
+create table hydt(
+h_id number(6) primary key,
+h_title varchar2(300),
+h_img varchar2(300),
+h_date date,
+h_content nclob
+);
+create sequence hydt_seq;
+
+
+------------产品案例表------------------------
+create table productcase(
+ pc_id number primary key,
+ pc_name varchar2(50),
+ pc_img varchar2(100),
+ pct_id number references productcasetype(pct_id)
+);
+create sequence productcase_seq;
+------------案例类型表-----------------------------
+create table productcasetype(
+ pct_id number primary key,
+ pct_name varchar2(50)
+);
+create sequence productcasetype_seq;
+------------产品理念特点---------------------
+create table cpln(
+  cpln_id number primary key,
+  cpln_name varchar2(100),
+  cpln_content nclob
+);
+create sequence cpln_seq;
+
+-------------发展历程（这个表示空的没有依赖)----------------------------
+create table fzlc(
+fzlc_id number primary key,
+fzlc_content nclob
+)
+
+-------------------------------------------------------------------------
+insert into product(p_id,p_name,p_usernumber,p_volume,p_wate,p_line,p_system,p_yield,p_kpa,p_img,pt_id,p_kucun) values(pro_seq.nextval,'GL-UF250SR12(A1)',65,'18L','2000W','60*39*115cm','三级过滤（超速）','一温一开','100-600（kPa)','index_60.png',1,5);
+insert into product(p_id,p_name,p_usernumber,p_volume,p_wate,p_line,p_system,p_yield,p_kpa,p_img,pt_id,p_kucun) values(pro_seq.nextval,'GL-UF250SR12(A2)',70,'18L','2500W','60*39*115cm','三级过滤（超速）','一温一开','100-600（kPa)','index_63.png',2,4);
+insert into product(p_id,p_name,p_usernumber,p_volume,p_wate,p_line,p_system,p_yield,p_kpa,p_img,pt_id,p_kucun) values(pro_seq.nextval,'GL-UF250SR12(A3)',75,'18L','2300W','60*39*115cm','三级过滤（超速）','一温一开','100-600（kPa)','product_03.png',2,7);
+insert into product(p_id,p_name,p_usernumber,p_volume,p_wate,p_line,p_system,p_yield,p_kpa,p_img,pt_id,p_kucun) values(pro_seq.nextval,'GL-UF250SR12(A4)',68,'18L','2200W','60*39*115cm','三级过滤（超速）','一温一开','100-600（kPa)','product_11.png',3,8);
+insert into product(p_id,p_name,p_usernumber,p_volume,p_wate,p_line,p_system,p_yield,p_kpa,p_img,pt_id,p_kucun) values(pro_seq.nextval,'GL-UF250SR12(A3)',60,'18L','1900W','60*39*115cm','三级过滤（超速）','一温一开','100-600（kPa)','index_57.png',5,12);
+insert into product(p_id,p_name,p_usernumber,p_volume,p_wate,p_line,p_system,p_yield,p_kpa,p_img,pt_id,p_kucun) values(pro_seq.nextval,'GL-UF250SR12(A1)',80,'18L','2500W','60*39*115cm','三级过滤（超速）','一温一开','100-600（kPa)','index_57.png',4,22);
+insert into product(p_id,p_name,p_usernumber,p_volume,p_wate,p_line,p_system,p_yield,p_kpa,p_img,pt_id,p_kucun) values(pro_seq.nextval,'GL-UF250SR12(A1)',50,'18L','1000W','60*39*115cm','三级过滤（超速）','一温一开','100-600（kPa)','index_60.png',2,13);
+insert into product(p_id,p_name,p_usernumber,p_volume,p_wate,p_line,p_system,p_yield,p_kpa,p_img,pt_id,p_kucun) values(pro_seq.nextval,'GL-UF250SR12(A2)',65,'18L','2000W','60*39*115cm','三级过滤（超速）','一温一开','100-600（kPa)','index_60.png',6,12);
+insert into product(p_id,p_name,p_usernumber,p_volume,p_wate,p_line,p_system,p_yield,p_kpa,p_img,pt_id,p_kucun) values(pro_seq.nextval,'GL-UF250SR12(A2)',70,'18L','2500W','60*39*115cm','三级过滤（超速）','一温一开','100-600（kPa)','index_57.png',4,1);
+insert into product(p_id,p_name,p_usernumber,p_volume,p_wate,p_line,p_system,p_yield,p_kpa,p_img,pt_id,p_kucun) values(pro_seq.nextval,'GL-UF250SR12(A2)',75,'18L','2300W','60*39*115cm','三级过滤（超速）','一温一开','100-600（kPa)','product_03.png',6,5);
+insert into product(p_id,p_name,p_usernumber,p_volume,p_wate,p_line,p_system,p_yield,p_kpa,p_img,pt_id,p_kucun) values(pro_seq.nextval,'GL-UF250SR12(A3)',68,'18L','2200W','60*39*115cm','三级过滤（超速）','一温一开','100-600（kPa)','index_63.png',5,6);
+insert into product(p_id,p_name,p_usernumber,p_volume,p_wate,p_line,p_system,p_yield,p_kpa,p_img,pt_id,p_kucun) values(pro_seq.nextval,'GL-UF250SR12(A4)',60,'18L','1900W','60*39*115cm','三级过滤（超速）','一温一开','100-600（kPa)','index_57.png',5,7);
+insert into product(p_id,p_name,p_usernumber,p_volume,p_wate,p_line,p_system,p_yield,p_kpa,p_img,pt_id,p_kucun) values(pro_seq.nextval,'GL-UF250SR12(A3)',80,'18L','2500W','60*39*115cm','三级过滤（超速）','一温一开','100-600（kPa)','product_03.png',5,2);
+insert into product(p_id,p_name,p_usernumber,p_volume,p_wate,p_line,p_system,p_yield,p_kpa,p_img,pt_id,p_kucun) values(pro_seq.nextval,'GL-UF250SR12(A1)',50,'18L','1000W','60*39*115cm','三级过滤（超速）','一温一开','100-600（kPa)','index_63.png',1,4);
+insert into product(p_id,p_name,p_usernumber,p_volume,p_wate,p_line,p_system,p_yield,p_kpa,p_img,pt_id,p_kucun) values(pro_seq.nextval,'GL-UF250SR12(A1)',65,'18L','2000W','60*39*115cm','三级过滤（超速）','一温一开','100-600（kPa)','index_60.png',3,5);
+
+insert into producttype(pt_id,pt_name,pt_img)values(protype_seq.nextval,'工程类饮用水','index3_30.png');
+insert into producttype(pt_id,pt_name,pt_img)values(protype_seq.nextval,'医院类饮用水','index3_28.png');
+insert into producttype(pt_id,pt_name,pt_img)values(protype_seq.nextval,'酒店类饮用水','index_38.png');
+insert into producttype(pt_id,pt_name,pt_img)values(protype_seq.nextval,'学校类饮用水','index3_40.png');
+insert into producttype(pt_id,pt_name,pt_img)values(protype_seq.nextval,'办公类饮用水','index3_35.png');
+insert into producttype(pt_id,pt_name,pt_img)values(protype_seq.nextval,'商场公共饮用水','index_33.png');
+
+insert into yonghu(yhid,yhpwd,yhname,yhemail, yhimg,yhphone,yhaddress,isadmin,yhsex)values(yh_seq.nextval,123456,'张宏伟','zhw54110','1.jpg','18810652160','联合大学206教室',0,'男');
+insert into yonghu(yhid,yhpwd,yhname,yhemail, yhimg,yhphone,yhaddress,isadmin,yhsex)values(yh_seq.nextval,123456,'admin','123456','2.jpg','18810652160','联合大学206教室',0,'男');
+insert into yonghu(yhid,yhpwd,yhname,yhemail, yhimg,yhphone,yhaddress,isadmin,yhsex)values(yh_seq.nextval,123456,'manager','111111','2.jpg','18810652160','联合大学206教室',1,'男');
+
+insert into productcase(pc_id,pc_name,pc_img,pct_id)values(productcase_seq.nextval,'山西农业大学','20131024195033-571435816.jpg',2);
+insert into productcase(pc_id,pc_name,pc_img,pct_id)values(productcase_seq.nextval,'武汉育才高中','index_81.png',3);
+insert into productcase(pc_id,pc_name,pc_img,pct_id)values(productcase_seq.nextval,'山西农业大学','20131024195033-571435816.jpg',4);
+insert into productcase(pc_id,pc_name,pc_img,pct_id)values(productcase_seq.nextval,'武汉育才高中','index_81.png',5);
+insert into productcase(pc_id,pc_name,pc_img,pct_id)values(productcase_seq.nextval,'山西农业大学','20131024195033-571435816.jpg',6);
+
+
+
+
+insert into productcasetype(pct_id,pct_name)values(productcasetype_seq.nextval,'大学案例');
+insert into productcasetype(pct_id,pct_name)values(productcasetype_seq.nextval,'高中案例');
+insert into productcasetype(pct_id,pct_name)values(productcasetype_seq.nextval,'政府机关');
+insert into productcasetype(pct_id,pct_name)values(productcasetype_seq.nextval,'医疗机构');
+insert into productcasetype(pct_id,pct_name)values(productcasetype_seq.nextval,'企业事业');
+
+insert into hydt(h_id,h_title,h_img,h_date,h_content)values(hydt_seq.nextval,'净水经销商如何经营好自己的区域，多关注这3个热换坏','about1_03.png',sysdate,'净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏');
+insert into hydt(h_id,h_title,h_img,h_date,h_content)values(hydt_seq.nextval,'净水经销商如何经营好自己的区域，多关注这3个热换坏','about1_03.png',sysdate,'净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏');
+insert into hydt(h_id,h_title,h_img,h_date,h_content)values(hydt_seq.nextval,'净水经销商如何经营好自己的区域，多关注这3个热换坏','about1_03.png',sysdate,'净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏');
+insert into hydt(h_id,h_title,h_img,h_date,h_content)values(hydt_seq.nextval,'净水经销商如何经营好自己的区域，多关注这3个热换坏','about1_03.png',sysdate,'净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏');
+insert into hydt(h_id,h_title,h_img,h_date,h_content)values(hydt_seq.nextval,'净水经销商如何经营好自己的区域，多关注这3个热换坏','about1_03.png',sysdate,'净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏');
+
+insert into news(n_id,n_writer,n_title,n_content,n_img,n_date)values(new_seq.nextval,'张晓雄','净水经销商如何经营好自己的区域，多关注这3个热换坏','净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏','about1_03.png',sysdate);
+insert into news(n_id,n_writer,n_title,n_content,n_img,n_date)values(new_seq.nextval,'张晓雄','净水经销商如何经营好自己的区域，多关注这3个热换坏','净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏','about1_03.png',sysdate);
+insert into news(n_id,n_writer,n_title,n_content,n_img,n_date)values(new_seq.nextval,'张晓雄','净水经销商如何经营好自己的区域，多关注这3个热换坏','净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏','about1_03.png',sysdate);
+insert into news(n_id,n_writer,n_title,n_content,n_img,n_date)values(new_seq.nextval,'张晓雄','净水经销商如何经营好自己的区域，多关注这3个热换坏','净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏','about1_03.png',sysdate);
+insert into news(n_id,n_writer,n_title,n_content,n_img,n_date)values(new_seq.nextval,'张晓雄','净水经销商如何经营好自己的区域，多关注这3个热换坏','净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏','about1_03.png',sysdate);
+insert into news(n_id,n_writer,n_title,n_content,n_img,n_date)values(new_seq.nextval,'张晓雄','净水经销商如何经营好自己的区域，多关注这3个热换坏','净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏','about1_03.png',sysdate);
+insert into news(n_id,n_writer,n_title,n_content,n_img,n_date)values(new_seq.nextval,'张晓雄','净水经销商如何经营好自己的区域，多关注这3个热换坏','净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏','about1_03.png',sysdate);
+insert into news(n_id,n_writer,n_title,n_content,n_img,n_date)values(new_seq.nextval,'张晓雄','净水经销商如何经营好自己的区域，多关注这3个热换坏','净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏净水经销商如何经营好自己的区域，多关注这3个热换坏','about1_03.png',sysdate);
+
+
+delete from productcasetype where pct_id=21;
+commit;
+select * from Productcase where PCT_ID=2;
+
+select * from Productcase where productcasetype.pctId=2;
