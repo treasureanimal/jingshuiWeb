@@ -38,9 +38,9 @@ public class ProductDaoImpl extends HibernateDaoSupport implements ProductDao {
 		Object object = query.uniqueResult();
 		Integer ts = Integer.parseInt(object.toString());
 		if(ts % 8 ==0) {
-			num = ts/8;
+			num = ts/5;
 		}else {
-			num = ts/8+1;
+			num = ts/5+1;
 		}
 		return num;
 	}
@@ -58,7 +58,7 @@ public class ProductDaoImpl extends HibernateDaoSupport implements ProductDao {
 		}
 		Query query = session.createQuery(sbf.toString());
 		//…Ë÷√∑÷“≥
-		query.setFirstResult((page-1)*8);
+		query.setFirstResult((page-1)*5);
 		query.setMaxResults(8);
 		List<Product> productList = query.list();
 		return productList;

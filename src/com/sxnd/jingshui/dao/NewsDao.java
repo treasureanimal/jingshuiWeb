@@ -11,7 +11,7 @@ public interface NewsDao {
 	
 	public int updateNews(News news)throws Exception;
 	
-	public int deleteNews(News news)throws Exception;
+	public int deleteNews(Integer nid)throws Exception;
 	
 	//分页查询新闻
 	public List<News> findNews(Integer page)throws Exception;

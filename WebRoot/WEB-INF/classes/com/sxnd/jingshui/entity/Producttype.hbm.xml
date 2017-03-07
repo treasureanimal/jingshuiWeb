@@ -18,7 +18,7 @@
         <property name="ptImg" type="java.lang.String">
             <column name="PT_IMG" length="300" />
         </property>
-        <set name="products" inverse="true">
+        <set name="products" inverse="true" cascade="all-delete-orphan">
             <key>
                 <column name="PT_ID" precision="22" scale="0" />
             </key>

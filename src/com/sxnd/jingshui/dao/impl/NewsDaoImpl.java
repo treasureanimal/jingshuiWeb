@@ -25,8 +25,9 @@ public class NewsDaoImpl extends HibernateDaoSupport implements NewsDao {
 		return 1;
 	}
 
-	public int deleteNews(News news) throws Exception {
+	public int deleteNews(Integer nid) throws Exception {
 		Session session = this.getSession();
+		News news = (News) session.get(News.class,nid);
 		session.delete(news);
 		return 1;
 	}

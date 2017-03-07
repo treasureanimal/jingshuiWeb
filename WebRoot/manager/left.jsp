@@ -78,8 +78,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             </tr>
                         </table>
                         <ul class="RM">
-                            <li><a href="./manager/order_1.jsp" target="main">新闻列表</a></li>
-                            <li><a href="./manager/order_2.jsp" target="main">添加新闻</a></li>
+                            <li><a href="fenyenManager.action" target="main">新闻列表</a></li>
+                            <li><a href="toaaddNew.action" target="main">添加新闻</a></li>
                           		<!--<li><a href="./manager/order_3.jsp" target="main">已发货订单</a></li>
                             		<li><a href="./manager/order_4.jsp" target="main">已完成订单</a></li>
                          		-->
@@ -93,8 +93,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             </tr>
                         </table>
                         <ul class="RM">
-                            <li><a href="./manager/order_1.jsp" target="main">行业动态</a></li>
-                            <li><a href="./manager/order_2.jsp" target="main">添加动态</a></li>
+                            <li><a href="fenyehManager.action" target="main">行业动态</a></li>
+                            <li><a href="toaaddNew.action" target="main">添加动态</a></li>
                           		<!--<li><a href="./manager/order_3.jsp" target="main">已发货订单</a></li>
                             		<li><a href="./manager/order_4.jsp" target="main">已完成订单</a></li>
                          		-->

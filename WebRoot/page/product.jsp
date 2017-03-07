@@ -85,20 +85,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                
             </ul>
 
-          <!--   <footer class="case_left_b">
-                <span class="case_left_b1">新闻咨询</span>
-                <span class="case_left_b2"><a href="">MORE+</a></span>
-            </footer>
-            <ul class="case_left_ul2">
-                <li>【饮水投标收藏手册】工程投标技巧</li>
-                <li>警惕！选购净水器常见陷阱和骗术… </li>
-                <li>净水经销商如何经营好自己的区域… </li>
-                <li>免费直饮水在中国是“贵族</li>
-                <li>警惕！选购净水器常见陷阱和骗术… </li>
-                <li>净水经销商如何经营好自己的区域… </li>
-                <li>免费直饮水在中国是“贵族</li>
-            </ul> -->
-
         </section>
         <section class="case_right">
             <header class="case_right_f">

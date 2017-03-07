@@ -91,6 +91,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                                          <td>
                                                         	<%-- <a href="javascript:shanchupt(${producttype.ptId})">删除</a> --%>
                                                         	<a href="toupdateptProducttype.action?ptid=${producttype.ptId}">编辑</a>
+                                             					
                                                         	<a href="manager/pt_add.jsp">添加</a>
                                                         </td>
                                                     </tr>

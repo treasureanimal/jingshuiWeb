@@ -16,9 +16,9 @@ public class NewsBizImpl  implements NewsBiz {
 		return newsDao.addNews(news);
 	}
 
-	public int deleteNews(News news) throws Exception {
+	public int deleteNews(Integer nid) throws Exception {
 		
-		return newsDao.deleteNews(news);
+		return newsDao.deleteNews(nid);
 	}
 
 	public List<News> findNews(Integer page) throws Exception {

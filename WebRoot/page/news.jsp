@@ -101,28 +101,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </div>
                 <div class="clear"></div>
             </header>
-            <div class="case_right_box"><!--
-                <section class="news-list">
-                 <c:forEach var="news" items="${newList}">
-                    <a href=""><img src="images/news_03.png" alt=""></a>
-                    <dl>
-                   
-                        <dt>${news. NTitle}</dt>
-                        <dd class="news-list_dd1">
-                            <img src="images/news_10 (2).png" alt="" class="news-list_d1_i1">
-                            <span>${news.NDate}</span>
-                         
-                            <img src="images/news_10 (1).png" alt="" class="news-list_d1_12">
-                            <span>人看过</span>
-                        </dd>
-                        <dd class="news-list_dd2">${news. NContent}    <a href="" class="news-list_dd2_a">[查看详情]</a></dd>
-                    </dl>
-                    <div class="clear"></div>
-                </c:forEach>
-                    
-                    
-                </section>
-                -->
+            <div class="case_right_box">
                 <c:forEach var="news" items="${newList}">
                 <section class="news-list">
                 
@@ -141,22 +120,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                    
                 </section>
                </c:forEach>
-               <!--
-                <section class="news-list">
-                    <a href=""><img src="images/news_03.png" alt=""></a>
-                    <dl>
-                        <dt>2016年红牛全国城市传奇篮球争霸赛湖北赛区冠军闪亮登场</dt>
-                        <dd class="news-list_dd1">
-                            <img src="images/news_10 (2).png" alt="" class="news-list_d1_i1">
-                            <span>2016年6月16日</span>
-                            <img src="images/news_10 (1).png" alt="" class="news-list_d1_12">
-                            <span>人看过</span>
-                        </dd>
-                        <dd class="news-list_dd2">我青山区篮球队是咱武汉人民的骄傲！武汉人民的骄傲！骄傲！在刚刚举行的2016红牛全国城市传奇篮球争霸赛湖北赛区的总决赛上，上周拿下武汉站冠军的我青山区篮球，夺得了湖北赛区总冠军，同时也将代表湖北省出战月底举的全国总决赛...      <a href="" class="news-list_dd2_a">[查看详情]</a></dd>
-                    </dl>
-                    <div class="clear"></div>
-                </section>
-                 --> 
                 <div class="clear"></div>
             </div>
             <div class="page">

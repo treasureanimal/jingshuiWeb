@@ -7,9 +7,13 @@ import java.util.Map;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.sxnd.jingshui.biz.HydtBiz;
+import com.sxnd.jingshui.biz.NewsBiz;
 import com.sxnd.jingshui.biz.ProductBiz;
 import com.sxnd.jingshui.biz.ProductcasetypeBiz;
 import com.sxnd.jingshui.biz.ProducttypeBiz;
+import com.sxnd.jingshui.entity.Hydt;
+import com.sxnd.jingshui.entity.News;
 import com.sxnd.jingshui.entity.Product;
 import com.sxnd.jingshui.entity.Productcasetype;
 import com.sxnd.jingshui.entity.Producttype;
@@ -29,6 +33,7 @@ public class ManagerAction extends ActionSupport {
 		private Integer nextpage;
 		private Integer backpage;
 		private Integer nowpage;
+		
 		private Product product;
 		private ProductBiz productBiz;
 		private Integer ptid;
@@ -39,8 +44,15 @@ public class ManagerAction extends ActionSupport {
 		private List<Productcasetype> productcasetypeList;
 		private List<Product> productList;
 		
+		private List<News> newsList;
+		private NewsBiz newsBiz;
+		private Integer nid;
+		private News news;
 		
-public String fenyep() throws Exception{
+		private List<Hydt> hydtList;
+		private HydtBiz hydtBiz;
+		
+		public String fenyep() throws Exception{
 		
 		
 		System.out.println("prsssssssssssss:");
@@ -69,16 +81,63 @@ public String fenyep() throws Exception{
 		System.out.println("producttypeList:"+producttypeList);
 		return "managerfenyep_success";
 		
-	}
-	public String findpt(){
-		try {
-			producttypeList = producttypeBiz.findproducttype();
-		} catch (Exception e) {
+		}
+		public String findpt(){
+			try {
+				producttypeList = producttypeBiz.findproducttype();
+			} catch (Exception e) {
+				
+			}
+			return "findpt_success";
 			
 		}
-		return "findpt_success";
-		
-	}
+		public String fenyen() throws Exception{
+				
+				
+			System.out.println("aaaaaaaaa");
+			session = ActionContext.getContext().getSession();
+			try{
+				if(nowpage==null||nowpage==0){
+					nowpage=1;
+				}
+				newsList = newsBiz.findNews(nowpage);
+				pages = newsBiz.findPageCount();
+				backpage = nowpage-1;
+				if(backpage<1)
+					backpage = 1;
+				nextpage = nowpage+1;
+				if(nextpage>pages)
+					nextpage = pages;
+			
+				
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+				return "managerfenyen_success";
+				
+		}
+		public String fenyeh(){
+			session = ActionContext.getContext().getSession();
+			try {
+				if(nowpage==null ||nowpage==0){
+					nowpage=1;
+				}
+				hydtList = hydtBiz.findHydt(nowpage);
+				System.out.println("hydtList:"+hydtList);
+				pages = hydtBiz.findPageCount();
+				backpage = nowpage-1;
+				if(backpage<1)
+					backpage = 1;
+				nextpage = nowpage+1;
+				if(nextpage>pages)
+					nextpage = pages;
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return "managerfenyeh_success";
+		}
 public File getImage() {
 	return image;
 }
@@ -192,6 +251,42 @@ public List<Product> getProductList() {
 }
 public void setProductList(List<Product> productList) {
 	this.productList = productList;
+}
+public List<News> getNewsList() {
+	return newsList;
+}
+public void setNewsList(List<News> newsList) {
+	this.newsList = newsList;
+}
+public NewsBiz getNewsBiz() {
+	return newsBiz;
+}
+public void setNewsBiz(NewsBiz newsBiz) {
+	this.newsBiz = newsBiz;
+}
+public Integer getNid() {
+	return nid;
+}
+public void setNid(Integer nid) {
+	this.nid = nid;
+}
+public News getNews() {
+	return news;
+}
+public void setNews(News news) {
+	this.news = news;
+}
+public List<Hydt> getHydtList() {
+	return hydtList;
+}
+public void setHydtList(List<Hydt> hydtList) {
+	this.hydtList = hydtList;
+}
+public HydtBiz getHydtBiz() {
+	return hydtBiz;
+}
+public void setHydtBiz(HydtBiz hydtBiz) {
+	this.hydtBiz = hydtBiz;
 }
 
 	

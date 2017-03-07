@@ -160,6 +160,8 @@
 	<bean id="managerAction" class="com.sxnd.jingshui.action.ManagerAction" scope="prototype">
 		<property name="productBiz" ref="productBiz"></property>
 		<property name="producttypeBiz" ref="producttypeBiz"></property>
+		<property name="newsBiz" ref="newsBiz"></property>
+		<property name="hydtBiz" ref="hydtBiz"></property>
 	</bean>
 	<bean id="productTypeAction" class="com.sxnd.jingshui.action.ProducttypeAction" scope="prototype">
 		<property name="producttypeBiz" ref="producttypeBiz"></property>

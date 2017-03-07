@@ -86,6 +86,8 @@
 		
 		<action name="*Manager" class="managerAction" method="{1}">
 			<result name="managerfenyep_success">manager/goods_list.jsp</result>
+			<result name="managerfenyen_success">manager/news_list.jsp</result>
+			<result name="managerfenyeh_success">manager/hydt_list.jsp</result>
 		</action>
 		
 		<action name="createImage" class="createImageAction">

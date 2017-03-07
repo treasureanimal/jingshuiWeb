@@ -50,9 +50,18 @@ public class NewsAction extends ActionSupport {
 			}catch(Exception e){
 				e.printStackTrace();
 			}
-			return "findnews_success";
+			return "managerfenyen_success";
 			
 		}
+	public String toupdatenews(){
+		try {
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "toupdatenews_success";
+		
+	}
 	
 	public String findnewsById() throws Exception {
 		try{
